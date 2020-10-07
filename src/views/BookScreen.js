@@ -1,7 +1,6 @@
 import React from 'react'
 import { Dimensions, Image, ScrollView, StyleSheet, View } from 'react-native'
 import { showMessage } from 'react-native-flash-message'
-// import SkeletonContent from 'react-native-skeleton-content'
 import SpecialButton from '../components/SpecialButton'
 import { Text } from '../components/Styled'
 import CartService from '../services/CartService'
@@ -106,7 +105,7 @@ export default function BookScreen(props) {
                                 {
                                     [1, 2, 3, 4, 5].map(entry => {
                                         return (
-                                            <AntDesign key={entry} name={rating <= entry ? 'staro' : 'star'} size={24} color='#f1c40f' />
+                                            <Icon key={entry} name={rating <= entry ? 'staro' : 'star'} size={24} color='#f1c40f' />
                                         )
                                     })
                                 }

@@ -19,7 +19,7 @@ export default function CartScreen() {
         await cart.forEach(entry => {
             calc += entry.price
         })
-        setPrice(Math.round(calc).toFixed(2))
+        setPrice(calc.toFixed(2))
     }
 
     return (

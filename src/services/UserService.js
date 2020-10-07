@@ -1,6 +1,7 @@
 import Service, { BaseService } from './Service'
 import authenticationConfig from '../config/authentication.json'
 import { AsyncStorage } from 'react-native'
+import CartService from './CartService'
 
 class UserService extends BaseService {
 
@@ -37,6 +38,7 @@ class UserService extends BaseService {
     }
 
     async logout() {
+        await CartService.clearCart()
         await AsyncStorage.removeItem('Authorization')
     }
 

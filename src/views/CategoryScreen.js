@@ -1,10 +1,9 @@
 import React from 'react'
 import { Container } from '../components/Styled'
 import { ScrollView, View, RefreshControl, TextInput, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native'
-import Book from '../components/Book'
 import BooksService from '../services/BooksService'
 import {Text} from '../components/Styled'
-// import SkeletonContent from 'react-native-skeleton-content'
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder'
 import SpecialButton from '../components/SpecialButton'
 import Icon from 'react-native-vector-icons/AntDesign'
 
@@ -64,14 +63,11 @@ export default function CategoryScreen(props) {
                         </View>
                         { 
                             loading ? 
-                            // <SkeletonContent
-                            //     containerStyle={{  }}
-                            //     isLoading={true}
-                            //     layout={[
-                            //         { key: 'someId', width: 140, height: 40, borderRadius: 12 },
-                            //     ]}
-                            // ></SkeletonContent> :
-                            <Text>test</Text> :
+                            <SkeletonPlaceholder speed={1200}>
+                                <SkeletonPlaceholder.Item>
+                                    <SkeletonPlaceholder.Item width={140} height={40} borderRadius={12} />
+                                </SkeletonPlaceholder.Item>
+                            </SkeletonPlaceholder> :
                             <Text style={styles.subtitle} weight='regular'>{pagination.results} livros</Text>
                         }
                         
@@ -86,14 +82,13 @@ export default function CategoryScreen(props) {
                     {
                         loading ? (
                             [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 , 14, 15].map(entry => {
-                                return (<SkeletonContent
-                                    key={entry}
-                                    containerStyle={{ flex: 1, width: 300 }}
-                                    isLoading={true}
-                                    layout={[
-                                        { key: 'someId', width: width - 40, height: 80, marginBottom: 15, borderRadius: 12 },
-                                    ]}
-                                ></SkeletonContent>)
+                                return (
+                                    <SkeletonPlaceholder speed={1200}>
+                                        <SkeletonPlaceholder.Item flex={1} width={300}>
+                                            <SkeletonPlaceholder.Item width={width - 40} height={80} borderRadius={12} marginBottom={15} />
+                                        </SkeletonPlaceholder.Item>
+                                    </SkeletonPlaceholder>
+                                )  
                             })
                         ) : (
                             <>

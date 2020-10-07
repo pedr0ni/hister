@@ -4,7 +4,7 @@ import { Text } from '../components/Styled'
 import SpecialButton from '../components/SpecialButton'
 import { AuthContext } from '../stacks/AuthContext'
 import UserService from '../services/UserService'
-import SkeletonPlaceholder from "react-native-skeleton-placeholder";
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder'
 import Icon from 'react-native-vector-icons/AntDesign'
 
 export default function ProfileScreen() {

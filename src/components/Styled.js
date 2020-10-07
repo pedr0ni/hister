@@ -13,14 +13,6 @@ export function Container(props) {
 // import { useFonts, Montserrat_400Regular, Montserrat_500Medium, 
 //     Montserrat_300Light, Montserrat_700Bold, Montserrat_100Thin } from '@expo-google-fonts/montserrat';
 
-const fonts = {
-    'regular': 'Montserrat_400Regular',
-    'medium': 'Montserrat_500Medium',
-    'light': 'Montserrat_300Light',
-    'bold': 'Montserrat_700Bold',
-    'thin': 'Montserrat_100Thin'
-}
-
 export function Text(props) {
     // let [fontsLoaded] = useFonts({
     //     Montserrat_400Regular,
@@ -34,10 +26,11 @@ export function Text(props) {
     //     return <ReactText>Not loaded</ReactText>
     // }
 
-    let weight = !props.weight ? fonts['regular'] : fonts[props.weight]
+    let weight = !props.weight ? 'Regular' : props.weight
+    weight = weight.charAt(0).toUpperCase() + weight.slice(1)
 
     return (
-        <ReactText style={{ ...{fontFamily: weight, fontFamily: 'Montserrat'}, ...props.style }}>{props.children}</ReactText>
+        <ReactText style={{ ...{fontFamily: `Montserrat-${weight}`}, ...props.style }}>{props.children}</ReactText>
     );
 }
 
