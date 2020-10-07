@@ -10,7 +10,7 @@ import { navigationRef } from './src/views/RootNavigation';
 import { StackOptions as HomeStackOptions } from './src/stacks/HomeStack'
 import { StackOptions as LoginStackOptions } from './src/stacks/LoginStack'
 import UserService from './src/services/UserService';
-import {AuthContext} from './src/stacks/AuthContext'
+import {AuthContext} from './src/stacks/Context'
 import { Text } from './src/components/Styled';
 import SplashScreen from './src/views/SplashScreen';
 import FlashMessage from 'react-native-flash-message'

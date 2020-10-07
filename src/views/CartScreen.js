@@ -1,5 +1,6 @@
 import React from 'react'
 import { Dimensions, Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import Swipeout from 'react-native-swipeout'
 import SpecialButton from '../components/SpecialButton'
 import { Container, Text } from '../components/Styled'
 import CartService from '../services/CartService'
@@ -26,11 +27,11 @@ export default function CartScreen() {
         <Container style={styles.holder}>
             <View style={{       borderBottomColor: '#e9e9e9',
         borderBottomWidth: 2,
-        borderRadius: 2,}}>
+        borderRadius: 2, padding: 20}}>
                 <View style={styles.titleHolder}>
                     <View style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: 60}}>
                         <Text style={styles.title} weight='bold'>Carrinho</Text>
-                        <Text weight='light'>2 items</Text>
+                        <Text weight='light'>{books.length} items</Text>
                     </View>
                     
                     <Text style={styles.subtitle} weight='regular'>R$ {price}</Text>
@@ -43,17 +44,24 @@ export default function CartScreen() {
                 {
                     books.map(entry => {
                         return (
-                            <View onPress={() => gotoBook(entry)} key={entry._id} style={styles.card}>
-                                <Image style={styles.cardIcon} source={require('../../assets/book.png')} />
-                                <View style={styles.cardTextHolder}>
-                                    <View style={{marginBottom: 15}}>
-                                        <Text weight='medium' style={styles.cardTitle}>{entry.title}</Text>
-                                        <Text style={{width: width - 134}} weight='light'>{entry.authors}</Text>
+                            <Swipeout style={{backgroundColor: '#f7f8fa'}} autoClose={true} right={[{
+                                onPress: () => {
+
+                                },
+                                text: 'Delete', type: 'delete',
+                            }]} rowId={entry._id} sectionId={1} onOpen={(secId, rowId, direction) => {}} onClose={(secId, rowId, direction) => {}}>
+                                <View  style={styles.card} onPress={() => gotoBook(entry)} key={entry._id}>
+                                    <Image style={styles.cardIcon} source={require('../../assets/book.png')} />
+                                    <View style={styles.cardTextHolder}>
+                                        <View style={{marginBottom: 15}}>
+                                            <Text weight='medium' style={styles.cardTitle}>{entry.title}</Text>
+                                            <Text style={{width: width - 134}} weight='light'>{entry.authors}</Text>
+                                        </View>
+                                        <Text weight='regular'>{entry.publisher}</Text>
+                                        <Text style={{color: '#616161'}} weight='light'>R$ {entry.price}</Text>
                                     </View>
-                                    <Text weight='regular'>{entry.publisher}</Text>
-                                    <Text style={{color: '#616161'}} weight='light'>R$ {entry.price}</Text>
                                 </View>
-                            </View>
+                            </Swipeout>
                         )
                     })
                 }
@@ -66,7 +74,7 @@ const width = Dimensions.get('window').width
 
 const styles = StyleSheet.create({
     holder: {
-        padding: 20
+
     },
     titleHolder: {
         display: 'flex',
@@ -88,7 +96,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column'
     },
     card: {
-        width: width - 40,
+        width: width,
         borderBottomWidth: 2,
         borderBottomColor: '#e9e9e9',
         borderRadius: 4,

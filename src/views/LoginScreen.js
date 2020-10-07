@@ -4,7 +4,7 @@ import { Text } from '../components/Styled'
 import GoBack from '../components/GoBack'
 import SpecialButton from '../components/SpecialButton'
 import UserService from '../services/UserService'
-import { AuthContext } from '../stacks/AuthContext'
+import { AuthContext } from '../stacks/Context'
 import Icon from 'react-native-vector-icons/AntDesign'
 
 export default function LoginScreen({navigation}) {

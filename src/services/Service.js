@@ -1,7 +1,5 @@
 import axios from 'axios'
-import {showMessage, hideMessage} from 'react-native-flash-message'
-import React from 'react'
-import { AuthContext } from '../stacks/AuthContext'
+import {showMessage} from 'react-native-flash-message'
 
 const instance = axios.create({
     baseURL: 'http://192.168.0.105:3000',

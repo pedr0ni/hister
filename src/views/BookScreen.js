@@ -5,10 +5,13 @@ import SpecialButton from '../components/SpecialButton'
 import { Text } from '../components/Styled'
 import CartService from '../services/CartService'
 import Icon from 'react-native-vector-icons/AntDesign'
+import { CartContext } from '../stacks/Context'
 
 export default function BookScreen(props) {
     const [book, setBook] = React.useState(props.route.params)
     const [rating, setRating] = React.useState(0)
+
+    const { updateItems } = React.useContext(CartContext)
 
     React.useEffect(() => {
         setRating(Math.floor(book.average_rating))
@@ -34,6 +37,8 @@ export default function BookScreen(props) {
             type: 'success'
         })
         await CartService.addItem(book)
+        const cart = await CartService.getCart()
+        updateItems(cart.length)
     }
 
     return (

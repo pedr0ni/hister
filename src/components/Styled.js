@@ -10,22 +10,7 @@ export function Container(props) {
    ) 
 }
 
-// import { useFonts, Montserrat_400Regular, Montserrat_500Medium, 
-//     Montserrat_300Light, Montserrat_700Bold, Montserrat_100Thin } from '@expo-google-fonts/montserrat';
-
 export function Text(props) {
-    // let [fontsLoaded] = useFonts({
-    //     Montserrat_400Regular,
-    //     Montserrat_500Medium,
-    //     Montserrat_300Light,
-    //     Montserrat_700Bold,
-    //     Montserrat_100Thin
-    // });
-
-    // if (!fontsLoaded) {
-    //     return <ReactText>Not loaded</ReactText>
-    // }
-
     let weight = !props.weight ? 'Regular' : props.weight
     weight = weight.charAt(0).toUpperCase() + weight.slice(1)
 
