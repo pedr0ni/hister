@@ -1,17 +1,43 @@
 import React from 'react'
-import { Dimensions, Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Dimensions, Image, ScrollView, StyleSheet, Animated, View } from 'react-native'
 import Swipeout from 'react-native-swipeout'
 import SpecialButton from '../components/SpecialButton'
 import { Container, Text } from '../components/Styled'
+import { ResizeImage } from '../Layout'
 import CartService from '../services/CartService'
+import { CartContext } from '../stacks/Context'
 
-export default function CartScreen() {
+export default function CartScreen({navigation}) {
+
     const [books, setBooks] = React.useState([])
     const [price, setPrice] = React.useState(0)
+    const [widthAnim, setWidthAnim] = React.useState(new Animated.Value(-500)) 
+
+    const { updateItems } = React.useContext(CartContext)
 
     React.useEffect(() => {
         loadCart()
-    }, [])
+        
+        navigation.addListener('focus', (payload) => {
+            loadCart()
+            setWidthAnim(new Animated.Value(-500))
+            handleAnimation()
+        })
+
+        handleAnimation()
+    }, [widthAnim])
+
+    const handleAnimation = () => {
+        if (books.length > 0) return
+        Animated.timing(
+            widthAnim,
+            {
+                toValue: 0,
+                duration: 2000,
+                useNativeDriver: true
+            },
+        ).start();
+    }
 
     const loadCart = async () => {
         const cart = await CartService.getCart()
@@ -21,6 +47,7 @@ export default function CartScreen() {
             calc += entry.price
         })
         setPrice(calc.toFixed(2))
+        updateItems(cart.length)
     }
 
     return (
@@ -36,36 +63,54 @@ export default function CartScreen() {
                     
                     <Text style={styles.subtitle} weight='regular'>R$ {price}</Text>
                 </View>
-                <SpecialButton text='Fechar pedido' />
-                <SpecialButton color='#FFF' icon='apple1' text='Apple Pay' />
+                {
+                    books.length > 0 ? (
+                        <View>
+                            <SpecialButton text='Fechar pedido' />
+                            <SpecialButton color='#FFF' icon='apple1' text='Apple Pay' />
+                        </View>
+                    ) : <></>
+                }
             </View>
 
-            <ScrollView contentContainerStyle={styles.cardHolder} showsVerticalScrollIndicator={false}>
-                {
-                    books.map(entry => {
-                        return (
-                            <Swipeout style={{backgroundColor: '#f7f8fa'}} autoClose={true} right={[{
-                                onPress: () => {
-
-                                },
-                                text: 'Delete', type: 'delete',
-                            }]} rowId={entry._id} sectionId={1} onOpen={(secId, rowId, direction) => {}} onClose={(secId, rowId, direction) => {}}>
-                                <View  style={styles.card} onPress={() => gotoBook(entry)} key={entry._id}>
-                                    <Image style={styles.cardIcon} source={require('../../assets/book.png')} />
-                                    <View style={styles.cardTextHolder}>
-                                        <View style={{marginBottom: 15}}>
-                                            <Text weight='medium' style={styles.cardTitle}>{entry.title}</Text>
-                                            <Text style={{width: width - 134}} weight='light'>{entry.authors}</Text>
+            {
+                books.length > 0 ? (
+                    <ScrollView contentContainerStyle={styles.cardHolder} showsVerticalScrollIndicator={false}>
+                        {
+                            books.map(entry => {
+                                return (
+                                    <Swipeout style={{backgroundColor: '#f7f8fa'}} autoClose={true} right={[{
+                                        onPress: async () => {
+                                            console.log('Removing')
+                                            await CartService.removeItem(entry._id)
+                                            await loadCart()
+                                            setWidthAnim(new Animated.Value(-500))
+                                            handleAnimation()
+                                        },
+                                        text: 'Delete', type: 'delete',
+                                    }]} rowId={entry._id}>
+                                        <View  style={styles.card} onPress={() => gotoBook(entry)} key={entry._id}>
+                                            <Image style={styles.cardIcon} source={require('../../assets/book.png')} />
+                                            <View style={styles.cardTextHolder}>
+                                                <View style={{marginBottom: 15}}>
+                                                    <Text weight='medium' style={styles.cardTitle}>{entry.title}</Text>
+                                                    <Text style={{width: width - 134}} weight='light'>{entry.authors}</Text>
+                                                </View>
+                                                <Text weight='regular'>{entry.publisher}</Text>
+                                                <Text style={{color: '#616161'}} weight='light'>R$ {entry.price}</Text>
+                                            </View>
                                         </View>
-                                        <Text weight='regular'>{entry.publisher}</Text>
-                                        <Text style={{color: '#616161'}} weight='light'>R$ {entry.price}</Text>
-                                    </View>
-                                </View>
-                            </Swipeout>
-                        )
-                    })
-                }
-            </ScrollView>
+                                    </Swipeout>
+                                )
+                            })
+                        }
+                    </ScrollView>
+                ) : (
+                    <Animated.View style={{...styles.emptyHolder, transform: [{translateX: widthAnim}]}}>
+                        <Image source={require('../../assets/shopping-cart.png')} style={{...ResizeImage(248, 512, 512)}} />
+                    </Animated.View>
+                )
+            }
         </Container>
     )
 }
@@ -119,5 +164,13 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between'
+    },
+    emptyHolder: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        transform: [
+            {translateX: -500}
+        ]
     }
 })

@@ -30,9 +30,9 @@ class CartService extends BaseService {
     }
 
     async removeItem(book) {
-        const cart = await this.getCart()
-        cart = cart.filter(c => c._id != book._id)
-
+        let cart = await this.getCart()
+        cart = cart.filter(c => c._id == book._id)
+        
         await AsyncStorage.setItem(TAG, JSON.stringify(cart))
     }
 

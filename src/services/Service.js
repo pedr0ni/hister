@@ -2,7 +2,7 @@ import axios from 'axios'
 import {showMessage} from 'react-native-flash-message'
 
 const instance = axios.create({
-    baseURL: 'http://192.168.0.105:3000',
+    baseURL: __DEV__ ? 'http://192.168.0.105:3000' : '',
     timeout: 1000
 })
 
@@ -23,7 +23,7 @@ const handleError = (error) => {
         })
 }
 
-const delay = 2000
+const delay = __DEV__ ? 2000 : 0
 
 instance.getWithDelay = (path) => {
     return new Promise((resolve, reject) => {
