@@ -2,7 +2,7 @@ import axios from 'axios'
 import {showMessage} from 'react-native-flash-message'
 
 const instance = axios.create({
-    baseURL: __DEV__ ? 'http://192.168.0.105:3000' : '',
+    baseURL: __DEV__ ? 'http://192.168.0.105:3000' : 'https://hister-api.herokuapp.com',
     timeout: 1000
 })
 
