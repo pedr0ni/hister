@@ -1,26 +1,17 @@
 import axios from 'axios'
-import {showMessage} from 'react-native-flash-message'
+import Messager from '../components/Messager'
 
 const instance = axios.create({
     baseURL: __DEV__ ? 'http://192.168.0.105:3000' : 'https://hister-api.herokuapp.com',
-    timeout: 1000
+    timeout: 10000
 })
 
 const handleError = (error) => {
-    if (error.response)
-        showMessage({
-            message: 'Ops',
-            description: error.response.data.message,
-            type: 'danger',
-            duration: 5000
-        })
-    else
-        showMessage({
-            message: 'Ops',
-            description: 'Ocorreu um erro de conexão.',
-            type: 'danger',
-            duration: 5000
-        })
+    if (error.response) {
+        Messager.show('❌', error.response.data.message, 5000, 'danger')
+    } else {
+        Messager.show('❌', 'Ocorreu um erro de conexão.', 5000, 'danger')
+    }
 }
 
 const delay = __DEV__ ? 2000 : 0

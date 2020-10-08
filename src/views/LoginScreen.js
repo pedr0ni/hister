@@ -18,6 +18,8 @@ export default function LoginScreen({navigation}) {
 
     const login = async () => {
 
+        if (isLoading) return
+
         setLoading(true)
 
         const response = await UserService.authenticate({
@@ -36,7 +38,6 @@ export default function LoginScreen({navigation}) {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.container}>
-                <GoBack navigator={navigation} />
 
                 <KeyboardAvoidingView style={styles.keyboardView}>
                     <Text weight='bold' style={styles.title}>Bem-vindo de volta 😄</Text>

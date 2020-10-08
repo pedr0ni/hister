@@ -6,6 +6,7 @@ import { AuthContext } from '../stacks/Context'
 import UserService from '../services/UserService'
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder'
 import Icon from 'react-native-vector-icons/AntDesign'
+import { ScrollView } from 'react-native-gesture-handler'
 
 export default function ProfileScreen() {
     const [user, setUser] = React.useState({})
@@ -37,80 +38,82 @@ export default function ProfileScreen() {
             <View style={styles.iconHolder}>
                 <Image style={styles.profileIcon} source={require('../../assets/user.png')} />
             </View>
-            <View style={styles.infoHolder}>
-                <Text style={styles.userName} weight='bold'>Olá, Matheus 😃</Text>
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={styles.infoHolder}>
+                    <Text style={styles.userName} weight='bold'>Olá, Matheus 😃</Text>
 
-                <View style={styles.infoCard}>
-                    <View style={styles.infoIcon}>
-                        <Icon name='user' size={24} color='#2ecc71' />
+                    <View style={styles.infoCard}>
+                        <View style={styles.infoIcon}>
+                            <Icon name='user' size={24} color='#2ecc71' />
+                        </View>
+                        <View>
+                            {
+                                loading ? (
+                                    <SkeletonPlaceholder speed={1200}>
+                                        <SkeletonPlaceholder.Item flex={1} width={300}>
+                                            <SkeletonPlaceholder.Item width={220} height={20} marginBottom={6} />
+                                            <SkeletonPlaceholder.Item width={180} height={20} marginBottom={6} />
+                                        </SkeletonPlaceholder.Item>
+                                    </SkeletonPlaceholder>
+                                ) : (
+                                    <>
+                                        <Text weight='light' style={styles.infoName}>Nome Completo</Text>
+                                        <Text weight='medium' style={styles.infoValue}>{user.name}</Text>
+                                    </>
+                                )
+                            }
+                        </View>
                     </View>
-                    <View>
-                        {
-                            loading ? (
-                                <SkeletonPlaceholder speed={1200}>
-                                    <SkeletonPlaceholder.Item flex={1} width={300}>
-                                        <SkeletonPlaceholder.Item width={220} height={20} marginBottom={6} />
-                                        <SkeletonPlaceholder.Item width={180} height={20} marginBottom={6} />
-                                    </SkeletonPlaceholder.Item>
-                                </SkeletonPlaceholder>
-                            ) : (
-                                <>
-                                    <Text weight='light' style={styles.infoName}>Nome Completo</Text>
-                                    <Text weight='medium' style={styles.infoValue}>{user.name}</Text>
-                                </>
-                            )
-                        }
+
+                    <View style={styles.infoCard}>
+                        <View style={styles.infoIcon}>
+                            <Icon name='mail' size={24} color='#3498db' />
+                        </View>
+                        <View>
+                            {
+                                loading ? (
+                                    <SkeletonPlaceholder speed={1200}>
+                                        <SkeletonPlaceholder.Item flex={1} width={300}>
+                                            <SkeletonPlaceholder.Item width={220} height={20} marginBottom={6} />
+                                            <SkeletonPlaceholder.Item width={180} height={20} marginBottom={6} />
+                                        </SkeletonPlaceholder.Item>
+                                    </SkeletonPlaceholder>
+                                ) : (
+                                    <>
+                                        <Text weight='light' style={styles.infoName}>E-mail</Text>
+                                        <Text weight='medium' style={styles.infoValue}>{user.email}</Text>
+                                    </>
+                                )
+                            }
+                        </View>
                     </View>
+
+                    <View style={styles.infoCard}>
+                        <View style={styles.infoIcon}>
+                            <Icon name='calendar' size={24} color='#e74c3c' />
+                        </View>
+                        <View>
+                            {
+                                loading ? (
+                                    <SkeletonPlaceholder speed={1200}>
+                                        <SkeletonPlaceholder.Item flex={1} width={300}>
+                                            <SkeletonPlaceholder.Item width={220} height={20} marginBottom={6} />
+                                            <SkeletonPlaceholder.Item width={180} height={20} marginBottom={6} />
+                                        </SkeletonPlaceholder.Item>
+                                    </SkeletonPlaceholder>
+                                ) : (
+                                    <>
+                                        <Text weight='light' style={styles.infoName}>Data de Nascimento</Text>
+                                        <Text weight='medium' style={styles.infoValue}>{user.birth}</Text>
+                                    </>
+                                )
+                            }
+                        </View>
+                    </View>
+
+                    <SpecialButton text='Sair' onPress={logout} color={'#e74c3c'} />
                 </View>
-
-                <View style={styles.infoCard}>
-                    <View style={styles.infoIcon}>
-                        <Icon name='mail' size={24} color='#3498db' />
-                    </View>
-                    <View>
-                        {
-                            loading ? (
-                                <SkeletonPlaceholder speed={1200}>
-                                    <SkeletonPlaceholder.Item flex={1} width={300}>
-                                        <SkeletonPlaceholder.Item width={220} height={20} marginBottom={6} />
-                                        <SkeletonPlaceholder.Item width={180} height={20} marginBottom={6} />
-                                    </SkeletonPlaceholder.Item>
-                                </SkeletonPlaceholder>
-                            ) : (
-                                <>
-                                    <Text weight='light' style={styles.infoName}>E-mail</Text>
-                                    <Text weight='medium' style={styles.infoValue}>{user.email}</Text>
-                                </>
-                            )
-                        }
-                    </View>
-                </View>
-
-                <View style={styles.infoCard}>
-                    <View style={styles.infoIcon}>
-                        <Icon name='calendar' size={24} color='#e74c3c' />
-                    </View>
-                    <View>
-                        {
-                            loading ? (
-                                <SkeletonPlaceholder speed={1200}>
-                                    <SkeletonPlaceholder.Item flex={1} width={300}>
-                                        <SkeletonPlaceholder.Item width={220} height={20} marginBottom={6} />
-                                        <SkeletonPlaceholder.Item width={180} height={20} marginBottom={6} />
-                                    </SkeletonPlaceholder.Item>
-                                </SkeletonPlaceholder>
-                            ) : (
-                                <>
-                                    <Text weight='light' style={styles.infoName}>Data de Nascimento</Text>
-                                    <Text weight='medium' style={styles.infoValue}>{user.birth}</Text>
-                                </>
-                            )
-                        }
-                    </View>
-                </View>
-
-                <SpecialButton text='Sair' onPress={logout} color={'#e74c3c'} />
-            </View>
+            </ScrollView>
         </View>
     )
 }
@@ -142,9 +145,11 @@ const styles = StyleSheet.create({
     },
     infoHolder: {
         marginTop: 80,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
+        flex: 1,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        zIndex: 1,
+        paddingBottom: 200
     },
     userName: {
         fontSize: 28,

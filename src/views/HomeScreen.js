@@ -4,8 +4,6 @@ import { View, StyleSheet, Dimensions, ScrollView,
 import { Container, Text } from '../components/Styled'
 import { Colors } from '../Layout'
 import CategoriesService from '../services/CategoriesService'
-import {showMessage, hideMessage} from 'react-native-flash-message'
-import UserService from '../services/UserService'
 
 const width = Dimensions.get('window').width
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import HomeScreen from '../views/HomeScreen'
-import { Image } from 'react-native'
+import { Image, Platform } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { Colors, ResizeImage } from '../Layout'
 import CategoryScreen from '../views/CategoryScreen'
@@ -12,9 +12,10 @@ const HomeStack = createStackNavigator()
 export const StackOptions = ({route}) => ({
     headerStyle: {
         backgroundColor: Colors.DarkGray,
-    },
+	},
+	headerTintColor: Colors.Primary,
     headerLeft: null,
-    headerTitle: <Image source={require('../../assets/logo.png')} style={ResizeImage(140, 800, 300)}/> 
+    headerTitle: Platform.OS == 'android' ? 'Hister' : <Image source={require('../../assets/logo.png')} style={ResizeImage(140, 800, 300)}/> 
 })
 
 export default function HomeStackScreen({navigation}) {

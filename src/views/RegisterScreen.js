@@ -1,11 +1,11 @@
 import React from 'react'
 import { SafeAreaView, View, StyleSheet, KeyboardAvoidingView, TextInput, Dimensions } from 'react-native'
-import GoBack from '../components/GoBack'
 import { Text } from '../components/Styled'
 import SpecialButton from '../components/SpecialButton'
 import UserService from '../services/UserService'
-import { showMessage } from 'react-native-flash-message'
 import Icon from 'react-native-vector-icons/AntDesign'
+import { ScrollView } from 'react-native-gesture-handler'
+import Messager from '../components/Messager'
 
 export default function RegisterScreen ({navigation}) {
 
@@ -18,17 +18,19 @@ export default function RegisterScreen ({navigation}) {
     const [showPassword, setShowPassword] = React.useState(false)
 
     const register = async () => {
+        if (isLoading) return
+        
+        if (!name || !email || !password || !birth) {
+            Messager.show('🤔', 'Por favor, preencha todos os campos.', 3000, 'warning')
+            return
+        }
+
         setLoading(true)
 
         const response = await UserService.register({name, email, password, birth})
 
         if (response) {
-            showMessage({
-                message: 'Sucesso!',
-                description: 'Sua conta foi cadastrada no Hister.',
-                type: 'success',
-                duration: 5000
-            })
+            Messager.show('🥳', 'Sua conta foi cadastrada no Hister.', 5000, 'success')
             navigation.navigate({name: 'LoginScreen'})
         }
 
@@ -37,10 +39,11 @@ export default function RegisterScreen ({navigation}) {
 
     return (
         <SafeAreaView style={styles.container}>
+            <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.container}>
-                <GoBack navigator={navigation} />
-
+            
                 <KeyboardAvoidingView style={styles.keyboardView}>
+                
                     <Text weight='bold' style={styles.title}>Novo cadastro 📝</Text>
 
                     <View style={styles.inputHolder}>
@@ -78,6 +81,7 @@ export default function RegisterScreen ({navigation}) {
                 </KeyboardAvoidingView>
 
             </View>
+            </ScrollView>
         </SafeAreaView>
     )
 
@@ -88,13 +92,12 @@ const width = Dimensions.get('window').width
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 20,
-        backgroundColor: '#FFF'
+        backgroundColor: '#FFF',
     },
     keyboardView: {
         display: 'flex',
         alignItems: 'center',
-        marginTop: 25
+        paddingTop: 20
     },
     title: {
         fontSize: 26,

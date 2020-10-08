@@ -1,11 +1,11 @@
 import React from 'react'
 import { Dimensions, Image, ScrollView, StyleSheet, View } from 'react-native'
-import { showMessage } from 'react-native-flash-message'
 import SpecialButton from '../components/SpecialButton'
 import { Text } from '../components/Styled'
 import CartService from '../services/CartService'
 import Icon from 'react-native-vector-icons/AntDesign'
 import { CartContext } from '../stacks/Context'
+import Messager from '../components/Messager'
 
 export default function BookScreen(props) {
     const [book, setBook] = React.useState(props.route.params)
@@ -20,22 +20,12 @@ export default function BookScreen(props) {
     const buy = async () => {
 
         if (await CartService.hasItem(book)) {
-            showMessage({
-                message: '😜',
-                description: `O livro ${book.title} já está no seu carrinho.`,
-                duration: 3000,
-                type: 'warning'
-            })
-
+            Messager.show('😜', `O livro ${book.title} já está no seu carrinho.`, 3000, 'warning')
             return
         }
+        
+        Messager.show('🤑', `O livro ${book.title} foi adicionado ao carrinho.`, 3000, 'success')
 
-        showMessage({
-            message: '🤑',
-            description: `O livro ${book.title} foi adicionado ao carrinho.`,
-            duration: 3000,
-            type: 'success'
-        })
         await CartService.addItem(book)
         const cart = await CartService.getCart()
         updateItems(cart.length)

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { StatusBar, View } from 'react-native';
+import { StatusBar } from 'react-native';
 import { Colors } from './src/Layout';
 import Service from './src/services/Service' // Just configure Axios
 import TabNavigator from './src/views/TabNavigator'
@@ -11,7 +11,6 @@ import { StackOptions as HomeStackOptions } from './src/stacks/HomeStack'
 import { StackOptions as LoginStackOptions } from './src/stacks/LoginStack'
 import UserService from './src/services/UserService';
 import {AuthContext} from './src/stacks/Context'
-import { Text } from './src/components/Styled';
 import SplashScreen from './src/views/SplashScreen';
 import FlashMessage from 'react-native-flash-message'
 
@@ -47,7 +46,7 @@ export default function App() {
 	return (
 		<AuthContext.Provider value={authContext}>
 			<FlashMessage position="top" />
-			<StatusBar barStyle={Colors.StatusBar}></StatusBar>
+			<StatusBar barStyle='light-content'></StatusBar>
 			{
 				loading ? (
 					<SplashScreen />
