@@ -1,13 +1,14 @@
 import React from 'react'
-import { View, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Image, StyleSheet, TouchableOpacity, Dimensions } from 'react-native'
 import SpecialButton from '../components/SpecialButton'
 import { Text } from '../components/Styled'
+import { ResizeImage } from '../Layout'
 
 export default function WelcomeScreen({navigation}) {
 
     return (
         <View style={styles.container}>
-            <Image style={{width: 400, height: 400}} source={require('../../assets/library.png')} />
+            <Image source={require('../../assets/library.png')} style={ResizeImage(width - 120, 1200, 1200)} />
             <Text style={styles.title} weight='bold'>O que é o Hister?</Text>
             <Text weight='regular' style={styles.subtitle}>O hister é uma plataforma gratuita para consumo de livros online.
                 Uma coleção diversa com mais de 11 mil livros à sua disposição!</Text>
@@ -23,6 +24,8 @@ export default function WelcomeScreen({navigation}) {
     )
 
 }
+
+const width = Dimensions.get('window').width
 
 const styles = StyleSheet.create({
     container: {

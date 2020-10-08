@@ -20,8 +20,6 @@
     "@react-navigation/bottom-tabs": "^5.9.1",
     "@react-navigation/native": "^5.7.5",
     "@react-navigation/stack": "^5.9.2",
-    "@unimodules/core": "^5.5.1",
-    "@unimodules/react-native-adapter": "^5.6.0",
     "axios": "^0.20.0",
     "react": "16.13.1",
     "react-native": "0.63.3",
