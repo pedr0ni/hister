@@ -1,13 +1,16 @@
 import React from 'react'
 import { SafeAreaView, View, StyleSheet, KeyboardAvoidingView, TextInput, Dimensions } from 'react-native'
 import { Text } from '../components/Styled'
-import SpecialButton from '../components/SpecialButton'
+import {SpecialButton} from '../components/SpecialButton'
 import UserService from '../services/UserService'
 import Icon from 'react-native-vector-icons/AntDesign'
 import { ScrollView } from 'react-native-gesture-handler'
 import Messager from '../components/Messager'
+import { useNavigation } from '@react-navigation/native'
 
-export default function RegisterScreen ({navigation}) {
+export const RegisterScreen: React.FC = () => {
+
+    const navigation = useNavigation()
 
     const [name, setName] = React.useState('')
     const [email, setEmail] = React.useState('')
@@ -31,7 +34,7 @@ export default function RegisterScreen ({navigation}) {
 
         if (response) {
             Messager.show('🥳', 'Sua conta foi cadastrada no Hister.', 5000, 'success')
-            navigation.navigate({name: 'LoginScreen'})
+            navigation.navigate('LoginScreen')
         }
 
         setLoading(false)

@@ -7,12 +7,12 @@ import CategoriesService from '../services/CategoriesService'
 
 const width = Dimensions.get('window').width
 
-function Card(props) {
+const Card: React.FC<{onPress: void, image: string, name: string}> = ({onPress, image, name}) => {
     return (
-        <TouchableOpacity onPress={props.onPress} style={cardStyles.holder}>
-            <Image style={cardStyles.icon} source={{uri: props.image}}/>
+        <TouchableOpacity onPress={onPress} style={cardStyles.holder}>
+            <Image style={cardStyles.icon} source={{uri: image}}/>
             <View style={cardStyles.textHolder}>
-                <Text weight='medium' style={cardStyles.title}>{props.name}</Text>
+                <Text weight='medium' style={cardStyles.title}>{name}</Text>
                 <Text weight='thin' style={cardStyles.subtitle}>Test</Text>
             </View>
         </TouchableOpacity>

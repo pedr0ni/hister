@@ -1,10 +1,13 @@
+import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import { View, Image, StyleSheet, TouchableOpacity, Dimensions } from 'react-native'
-import SpecialButton from '../components/SpecialButton'
+import {SpecialButton} from '../components/SpecialButton'
 import { Text } from '../components/Styled'
 import { ResizeImage } from '../Layout'
 
-export default function WelcomeScreen({navigation}) {
+export const WelcomeScreen: React.FC = () => {
+
+    const navigation = useNavigation()
 
     return (
         <View style={styles.container}>

@@ -8,4 +8,4 @@ class CategoriesService extends BaseService {
 
 }
 
-export default CategoriesInstance = new CategoriesService()
+export default new CategoriesService()

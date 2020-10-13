@@ -1,4 +1,4 @@
-import { Dimensions } from 'react-native'
+import { ImageStyle } from 'react-native'
 
 const isDarkMode = false
 
@@ -26,7 +26,7 @@ const ColorsLight = {
 
 export const Colors = isDarkMode ? ColorsDark : ColorsLight
 
-export function ResizeImage (width, imageWidth, imageHeight) {
+export function ResizeImage (width: number, imageWidth: number, imageHeight: number) : ImageStyle {
     return {
         resizeMode: 'contain',
         width: width,

@@ -1,16 +1,20 @@
+import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import { Dimensions, Image, ScrollView, StyleSheet, Animated, View } from 'react-native'
 import Swipeout from 'react-native-swipeout'
-import SpecialButton from '../components/SpecialButton'
+import {SpecialButton} from '../components/SpecialButton'
 import { Container, Text } from '../components/Styled'
 import { ResizeImage } from '../Layout'
+import { Book } from '../models/Book'
 import CartService from '../services/CartService'
 import { CartContext } from '../stacks/Context'
 
-export default function CartScreen({navigation}) {
+export const CartScreen: React.FC = () => {
 
-    const [books, setBooks] = React.useState([])
-    const [price, setPrice] = React.useState(0)
+    const navigation = useNavigation()
+
+    const [books, setBooks] = React.useState<Array<Book>>([])
+    const [price, setPrice] = React.useState<string>('0.00')
     const [widthAnim, setWidthAnim] = React.useState(new Animated.Value(-500)) 
 
     const { updateItems } = React.useContext(CartContext)
@@ -82,14 +86,14 @@ export default function CartScreen({navigation}) {
                                     <Swipeout style={{backgroundColor: '#f7f8fa'}} autoClose={true} right={[{
                                         onPress: async () => {
                                             console.log('Removing')
-                                            await CartService.removeItem(entry._id)
+                                            await CartService.removeItem(entry)
                                             await loadCart()
                                             setWidthAnim(new Animated.Value(-500))
                                             handleAnimation()
                                         },
                                         text: 'Delete', type: 'delete',
-                                    }]} rowId={entry._id}>
-                                        <View  style={styles.card} onPress={() => gotoBook(entry)} key={entry._id}>
+                                    }]} rowId={1}>
+                                        <View  style={styles.card} key={entry._id}>
                                             <Image style={styles.cardIcon} source={require('../../assets/book.png')} />
                                             <View style={styles.cardTextHolder}>
                                                 <View style={{marginBottom: 15}}>

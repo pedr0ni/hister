@@ -1,18 +1,23 @@
 import React from 'react'
 import { Dimensions, Image, StyleSheet, View } from 'react-native'
 import { Text } from '../components/Styled'
-import SpecialButton from '../components/SpecialButton'
+import {SpecialButton} from '../components/SpecialButton'
 import { AuthContext } from '../stacks/Context'
 import UserService from '../services/UserService'
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder'
 import Icon from 'react-native-vector-icons/AntDesign'
 import { ScrollView } from 'react-native-gesture-handler'
+import { User } from '../models/User'
 
 export default function ProfileScreen() {
-    const [user, setUser] = React.useState({})
+    const [user, setUser] = React.useState<User>({
+        birth: '',
+        email: '',
+        name: ''
+    })
     const [loading, setLoading] = React.useState(true)
 
-    const { setLogged } = React.useContext(AuthContext)
+    const authContext = React.useContext(AuthContext)!
 
     React.useEffect(() => {
         fetch()
@@ -24,13 +29,14 @@ export default function ProfileScreen() {
 
         if (response) {
             setUser(response.data)
+            console.log(response.data)
         }
         setLoading(false)
     }
 
     const logout = async () => {
         await UserService.logout()
-        setLogged(false)
+        authContext.setLogged(false)
     }
 
     return (

@@ -13,16 +13,16 @@ class UserService extends BaseService {
     async loadToken() {
         const token = await this.getToken()
         if (token)
-            Service.defaults.headers = {
+            Service.axios.defaults.headers = {
                 Authorization: `Bearer ${token}`
             }
     }
 
-    authenticate(body) {
+    authenticate(body : object) {
         return Service.postWithDelay('/user/authenticate', body)
     }
 
-    register(body) {
+    register(body : object) {
         return Service.postWithDelay('/user/register', body)
     }
 
@@ -30,9 +30,9 @@ class UserService extends BaseService {
         return Service.getWithDelay('/user/info')
     }
 
-    async setToken(token) {
+    async setToken(token: string) {
         await AsyncStorage.setItem('Authorization', token)
-        Service.defaults.headers = {
+        Service.axios.defaults.headers = {
             Authorization: `Bearer ${token}`
         }
     }
@@ -42,7 +42,7 @@ class UserService extends BaseService {
         await AsyncStorage.removeItem('Authorization')
     }
 
-    async getToken() {
+    async getToken() : Promise<string | null> {
         const value = await AsyncStorage.getItem('Authorization')
         
         return value
@@ -50,4 +50,4 @@ class UserService extends BaseService {
 
 }
 
-export default UserInstance = new UserService()
+export default new UserService()

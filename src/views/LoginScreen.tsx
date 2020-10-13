@@ -1,20 +1,22 @@
 import React from 'react'
 import { SafeAreaView, View, StyleSheet, TouchableOpacity, KeyboardAvoidingView, TextInput, Dimensions } from 'react-native'
 import { Text } from '../components/Styled'
-import GoBack from '../components/GoBack'
-import SpecialButton from '../components/SpecialButton'
+import {SpecialButton} from '../components/SpecialButton'
 import UserService from '../services/UserService'
 import { AuthContext } from '../stacks/Context'
 import Icon from 'react-native-vector-icons/AntDesign'
+import { useNavigation } from '@react-navigation/native'
 
-export default function LoginScreen({navigation}) {
+export const LoginScreen: React.FC = () => {
+
+    const navigation = useNavigation()
 
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
     const [isLoading, setLoading] = React.useState(false)
     const [showPassword, setShowPassword] = React.useState(false)
 
-    const { setLogged } = React.useContext(AuthContext)
+    const authContext = React.useContext(AuthContext)!
 
     const login = async () => {
 
@@ -28,7 +30,7 @@ export default function LoginScreen({navigation}) {
 
         if (response) {
             UserService.setToken(response.data.token)
-            setLogged(true)
+            authContext.setLogged(true)
         }
 
         setLoading(false)
@@ -61,9 +63,9 @@ export default function LoginScreen({navigation}) {
                         <View style={styles.divider}></View>
                     </View>
 
-                    <SpecialButton color='#FFF' icon='google' onPress={login} text='Google' />
+                    <SpecialButton color='#FFF' icon='google' text='Google' />
 
-                    <SpecialButton color='#273c75' icon='facebook-square' style={{marginTop: -5}} onPress={login} text='Facebook' />
+                    <SpecialButton color='#273c75' icon='facebook-square' style={{marginTop: -5}} text='Facebook' />
                 </KeyboardAvoidingView>
 
             </View>

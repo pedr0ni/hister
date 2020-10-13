@@ -3,23 +3,22 @@ import { StatusBar } from 'react-native';
 import { Colors } from './src/Layout';
 import Service from './src/services/Service' // Just configure Axios
 import TabNavigator from './src/views/TabNavigator'
-import LoginStack from './src/stacks/LoginStack'
+import {LoginStackScreen} from './src/stacks/LoginStack'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack'
-import { navigationRef } from './src/views/RootNavigation';
-import { StackOptions as HomeStackOptions } from './src/stacks/HomeStack'
 import { StackOptions as LoginStackOptions } from './src/stacks/LoginStack'
 import UserService from './src/services/UserService';
 import {AuthContext} from './src/stacks/Context'
 import SplashScreen from './src/views/SplashScreen';
 import FlashMessage from 'react-native-flash-message'
+import { Text } from './src/components/Styled';
 
 const Stack = createStackNavigator()
 
 export default function App() {
-	const [isLogged, setLogged] = useState(false)
-	const [token, setToken] = useState(null)
-	const [loading, setLoading] = useState(true)
+	const [isLogged, setLogged] = useState<boolean>(false)
+	const [token, setToken] = useState<string | null>(null)
+	const [loading, setLoading] = useState<boolean>(true)
 
 	useEffect(() => {
 		fetchToken()
@@ -35,29 +34,29 @@ export default function App() {
 			setLogged(true)
 	}
 
-	const authContext = useMemo(() => {
-		return {
-			setLogged: (logged) => {
-				setLogged(logged)
-			}
-		}
-	}, [])
+	// const authContext = useMemo(() => {
+	// 	return {
+	// 		setLogged: (logged: boolean) => {
+	// 			setLogged(logged)
+	// 		}
+	// 	}
+	// }, [])
 
 	return (
-		<AuthContext.Provider value={authContext}>
+		<AuthContext.Provider value={{isLogged, setLogged}}>
 			<FlashMessage position="top" />
-			<StatusBar barStyle='light-content'></StatusBar>
+			<StatusBar barStyle='dark-content'></StatusBar>
 			{
 				loading ? (
 					<SplashScreen />
 				) : (
-					<NavigationContainer ref={navigationRef}>
+					<NavigationContainer>
 					<Stack.Navigator>
 						{
 							isLogged ? (
-								<Stack.Screen name="HomeStack" component={TabNavigator} options={HomeStackOptions} />
+								<Stack.Screen name="HomeStack" component={TabNavigator} options={{title: 'Hister', headerTintColor: Colors.Primary}} />
 							) : (
-								<Stack.Screen name="LoginStack" component={LoginStack} options={LoginStackOptions} />
+								<Stack.Screen name="LoginStack" component={LoginStackScreen} options={LoginStackOptions} />
 							)
 						}
 					</Stack.Navigator>

@@ -1,14 +1,19 @@
 import React from 'react'
 import { Dimensions, Image, ScrollView, StyleSheet, View } from 'react-native'
-import SpecialButton from '../components/SpecialButton'
+import {SpecialButton} from '../components/SpecialButton'
 import { Text } from '../components/Styled'
 import CartService from '../services/CartService'
 import Icon from 'react-native-vector-icons/AntDesign'
 import { CartContext } from '../stacks/Context'
 import Messager from '../components/Messager'
+import { RouteProp, useRoute } from '@react-navigation/native'
+import { Book } from '../models/Book'
 
-export default function BookScreen(props) {
-    const [book, setBook] = React.useState(props.route.params)
+export const BookScreen: React.FC = () => {
+
+    const route = useRoute<RouteProp<Record<string, Book>, string>>();
+
+    const [book, setBook] = React.useState<Book>(route.params)
     const [rating, setRating] = React.useState(0)
 
     const { updateItems } = React.useContext(CartContext)

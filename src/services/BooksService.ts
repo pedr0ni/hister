@@ -1,3 +1,4 @@
+import { Category } from '../models/Category'
 import Service, { BaseService } from './Service'
 
 class BooksService extends BaseService {
@@ -6,10 +7,10 @@ class BooksService extends BaseService {
         return Service.getWithDelay('/books')
     }
 
-    listByCategory(category, page) {
+    listByCategory(category: Category, page: number) {
         return Service.getWithDelay(`/book/category/${category}?page=${page}`)
     }
 
 }
 
-export default BooksInstance = new BooksService()
+export default new BooksService()

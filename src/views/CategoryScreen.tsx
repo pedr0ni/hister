@@ -4,13 +4,20 @@ import { ScrollView, View, RefreshControl, TextInput, StyleSheet, Dimensions, Im
 import BooksService from '../services/BooksService'
 import {Text} from '../components/Styled'
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder'
-import SpecialButton from '../components/SpecialButton'
+import {SpecialButton} from '../components/SpecialButton'
 import Icon from 'react-native-vector-icons/AntDesign'
+import { Book } from '../models/Book'
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
+import { Category } from '../models/Category'
 
-export default function CategoryScreen(props) {
+export default function CategoryScreen() {
 
-    const [category, setCategory] = React.useState(props.route.params)
-    const [books, setBooks] = React.useState([])
+    const navigation = useNavigation()
+
+    const route = useRoute<RouteProp<Record<string, Category>, string>>();
+
+    const [category, setCategory] = React.useState<Category>(route.params)
+    const [books, setBooks] = React.useState<Array<Book>>([])
     const [search, setSearch] = React.useState('')
     const [page, setPage] = React.useState(0)
     const [pagination, setPagination] = React.useState({})
@@ -28,7 +35,7 @@ export default function CategoryScreen(props) {
         if (shouldLoad)
             setLoading(true)
 
-        const response = await BooksService.listByCategory(category._id, page)
+        const response = await BooksService.listByCategory(category, page)
 
         if (response) {
             books.push(...response.data.books)
@@ -46,8 +53,8 @@ export default function CategoryScreen(props) {
         setButtonLoading(false)
     }
 
-    const gotoBook = (book) => {
-        props.navigation.navigate('Book', book)
+    const gotoBook = (book: Book) => {
+        navigation.navigate('Book', book)
     }
 
     return (
