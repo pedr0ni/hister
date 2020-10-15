@@ -28,6 +28,7 @@
 		8260547203AEB013D06DEFDB /* libPods-hister-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0599ACDA1A0A1CCED0AA4D50 /* libPods-hister-tvOSTests.a */; };
 		83D5D1FAD4A4400194C7CD14 /* Montserrat-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 82C259C7C19A416098EA8516 /* Montserrat-Italic.ttf */; };
 		A064D675EC2F607BC0DCC3C2 /* libPods-hister-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 480CCB839140B27ADF428F40 /* libPods-hister-tvOS.a */; };
+		A706855725366FD6005BFED6 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 008F07F21AC5B25A0029DE68 /* main.jsbundle */; };
 		A7BE76EB252D5F5D00EC17C2 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = A7BE76EA252D5F5D00EC17C2 /* Fonts */; };
 		AF9780E7A00F4292A93BCE3D /* Montserrat-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9AF69E52ABA84FA0AD82B4B9 /* Montserrat-ThinItalic.ttf */; };
 		B9D06B26AE6F42EAAF1512FA /* Montserrat-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE5242E61C1545CD8357F505 /* Montserrat-LightItalic.ttf */; };
@@ -322,11 +323,11 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "hister" */;
 			buildPhases = (
 				95ED896EFE86E765A98A3374 /* [CP] Check Pods Manifest.lock */,
+				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
-				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				36CAB562BECE67ED755726E8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -437,6 +438,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A706855725366FD6005BFED6 /* main.jsbundle in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				ECC731D7B5B541EF8960FBD2 /* Montserrat-Black.ttf in Resources */,
@@ -491,7 +493,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
