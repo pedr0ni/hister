@@ -29,7 +29,6 @@ export default function ProfileScreen() {
 
         if (response) {
             setUser(response.data)
-            console.log(response.data)
         }
         setLoading(false)
     }

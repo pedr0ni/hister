@@ -17,7 +17,7 @@ export const CartScreen: React.FC = () => {
     const [price, setPrice] = React.useState<string>('0.00')
     const [widthAnim, setWidthAnim] = React.useState(new Animated.Value(-500)) 
 
-    const { updateItems } = React.useContext(CartContext)
+    const cartContext = React.useContext(CartContext)
 
     React.useEffect(() => {
         loadCart()
@@ -51,7 +51,7 @@ export const CartScreen: React.FC = () => {
             calc += entry.price
         })
         setPrice(calc.toFixed(2))
-        updateItems(cart.length)
+        cartContext?.setItems(cart.length)
     }
 
     return (

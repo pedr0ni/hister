@@ -8,7 +8,7 @@ class BooksService extends BaseService {
     }
 
     listByCategory(category: Category, page: number) {
-        return Service.getWithDelay(`/book/category/${category}?page=${page}`)
+        return Service.getWithDelay(`/book/category/${category._id}?page=${page}`)
     }
 
 }

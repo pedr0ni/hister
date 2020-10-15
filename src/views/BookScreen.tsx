@@ -16,7 +16,7 @@ export const BookScreen: React.FC = () => {
     const [book, setBook] = React.useState<Book>(route.params)
     const [rating, setRating] = React.useState(0)
 
-    const { updateItems } = React.useContext(CartContext)
+    const cartContext = React.useContext(CartContext)
 
     React.useEffect(() => {
         setRating(Math.floor(book.average_rating))
@@ -33,7 +33,7 @@ export const BookScreen: React.FC = () => {
 
         await CartService.addItem(book)
         const cart = await CartService.getCart()
-        updateItems(cart.length)
+        cartContext?.setItems(cart.length)
     }
 
     return (

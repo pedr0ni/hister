@@ -90,7 +90,7 @@ export default function CategoryScreen() {
                         loading ? (
                             [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 , 14, 15].map(entry => {
                                 return (
-                                    <SkeletonPlaceholder speed={1200}>
+                                    <SkeletonPlaceholder key={entry} speed={1200}>
                                         <SkeletonPlaceholder.Item flex={1} width={300}>
                                             <SkeletonPlaceholder.Item width={width - 40} height={80} borderRadius={12} marginBottom={15} />
                                         </SkeletonPlaceholder.Item>
