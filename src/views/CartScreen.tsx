@@ -85,7 +85,6 @@ export const CartScreen: React.FC = () => {
                                 return (
                                     <Swipeout style={{backgroundColor: '#f7f8fa'}} autoClose={true} right={[{
                                         onPress: async () => {
-                                            console.log('Removing')
                                             await CartService.removeItem(entry)
                                             await loadCart()
                                             setWidthAnim(new Animated.Value(-500))

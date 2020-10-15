@@ -45,7 +45,7 @@ export default function ProfileScreen() {
             </View>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.infoHolder}>
-                    <Text style={styles.userName} weight='bold'>Olá, Matheus 😃</Text>
+                    <Text style={styles.userName} weight='bold'>Olá, {user.name.substring(0, user.name.indexOf(' '))} 😃</Text>
 
                     <View style={styles.infoCard}>
                         <View style={styles.infoIcon}>
@@ -116,6 +116,29 @@ export default function ProfileScreen() {
                         </View>
                     </View>
 
+                    <View style={styles.infoCard}>
+                        <View style={styles.infoIcon}>
+                            <Icon name='creditcard' size={24} color='#fbc02d' />
+                        </View>
+                        <View>
+                            {
+                                loading ? (
+                                    <SkeletonPlaceholder speed={1200}>
+                                        <SkeletonPlaceholder.Item flex={1} width={300}>
+                                            <SkeletonPlaceholder.Item width={220} height={20} marginBottom={6} />
+                                            <SkeletonPlaceholder.Item width={180} height={20} marginBottom={6} />
+                                        </SkeletonPlaceholder.Item>
+                                    </SkeletonPlaceholder>
+                                ) : (
+                                    <>
+                                        <Text weight='light' style={styles.infoName}>Saldo</Text>
+                                        <Text weight='medium' style={styles.infoValue}>{user.credit}</Text>
+                                    </>
+                                )
+                            }
+                        </View>
+                    </View>
+
                     <SpecialButton text='Sair' onPress={logout} color={'#e74c3c'} />
                 </View>
             </ScrollView>
@@ -140,13 +163,15 @@ const styles = StyleSheet.create({
         elevation: 5,
         position: 'relative',
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
+        zIndex: 100
     },
     profileIcon: {
         width: 128,
         height: 128,
         position: 'absolute',
         top: 90,
+        zIndex: 90
     },
     infoHolder: {
         marginTop: 80,
@@ -154,7 +179,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         zIndex: 1,
-        paddingBottom: 200
+        paddingBottom: 200,
     },
     userName: {
         fontSize: 28,
