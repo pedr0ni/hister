@@ -2,6 +2,7 @@ import Service, { BaseService } from './Service'
 import authenticationConfig from '../config/authentication.json'
 import { AsyncStorage } from 'react-native'
 import CartService from './CartService'
+import { Book } from '../models/Book'
 
 class UserService extends BaseService {
 
@@ -46,6 +47,18 @@ class UserService extends BaseService {
         const value = await AsyncStorage.getItem('Authorization')
         
         return value
+    }
+
+    async addCart(book: Book) {
+        return Service.postWithDelay('/user/cart', book)
+    }
+
+    async fetchCart() {
+        return Service.getWithDelay('/user/cart')
+    }
+
+    async removeCart(book: Book) {
+        return Service.deleteWithDelay('/user/cart', book)
     }
 
 }

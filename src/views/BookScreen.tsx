@@ -8,6 +8,7 @@ import { CartContext } from '../stacks/Context'
 import Messager from '../components/Messager'
 import { RouteProp, useRoute } from '@react-navigation/native'
 import { Book } from '../models/Book'
+import UserService from '../services/UserService'
 
 export const BookScreen: React.FC = () => {
 
@@ -34,6 +35,14 @@ export const BookScreen: React.FC = () => {
         await CartService.addItem(book)
         const cart = await CartService.getCart()
         cartContext?.setItems(cart.length)
+
+        const response = await UserService.addCart(book)
+
+        if (response) {
+            console.log('[CART] Response is ok :)')
+        } else {
+            console.log('[CART] Could not add book to users cart')
+        }
     }
 
     return (

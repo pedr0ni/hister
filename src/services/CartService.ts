@@ -11,6 +11,10 @@ class CartService extends BaseService {
         this.configure()
     }
 
+    placeOrder(books: Array<Book>) {
+        return Service.postWithDelay('/order', books)
+    }
+
     async getCart() : Promise<Array<Book>> {
         const item = await AsyncStorage.getItem(TAG)
         return JSON.parse(item!!)
@@ -21,6 +25,10 @@ class CartService extends BaseService {
         cart.push(book)
 
         await AsyncStorage.setItem(TAG, JSON.stringify(cart))
+    }
+
+    async setBooks(books: Array<Book>) {
+        await AsyncStorage.setItem(TAG, JSON.stringify(books))
     }
 
     async hasItem(book: Book) : Promise<boolean> {

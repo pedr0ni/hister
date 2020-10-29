@@ -2,11 +2,13 @@ import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import { Dimensions, Image, ScrollView, StyleSheet, Animated, View } from 'react-native'
 import Swipeout from 'react-native-swipeout'
+import Messager from '../components/Messager'
 import {SpecialButton} from '../components/SpecialButton'
 import { Container, Text } from '../components/Styled'
 import { ResizeImage } from '../Layout'
 import { Book } from '../models/Book'
 import CartService from '../services/CartService'
+import UserService from '../services/UserService'
 import { CartContext } from '../stacks/Context'
 
 export const CartScreen: React.FC = () => {
@@ -20,16 +22,26 @@ export const CartScreen: React.FC = () => {
     const cartContext = React.useContext(CartContext)
 
     React.useEffect(() => {
-        loadCart()
-        
+        handleAnimation()
+    }, [widthAnim])
+
+    React.useEffect(() => {
         navigation.addListener('focus', (payload) => {
             loadCart()
             setWidthAnim(new Animated.Value(-500))
             handleAnimation()
         })
+    }, [])
 
-        handleAnimation()
-    }, [widthAnim])
+    const placeOrder = async () => {
+        const response = await CartService.placeOrder(books)
+
+        if (response) {
+            Messager.show('🎁', 'Seu pedido foi realizado com sucesso!', 5000, 'success')
+            await CartService.clearCart()
+            await loadCart()
+        }
+    }
 
     const handleAnimation = () => {
         if (books.length > 0) return
@@ -43,8 +55,15 @@ export const CartScreen: React.FC = () => {
         ).start();
     }
 
-    const loadCart = async () => {
-        const cart = await CartService.getCart()
+    const loadCart = async (fetch: boolean = true) => {
+        console.log(`[CART] Loading cart with fetch = ${fetch}!`)
+        let cart = await CartService.getCart()
+
+        if (cart.length <= 0 && fetch) {
+            const response = await UserService.fetchCart()
+            cart = response.data
+        }
+
         setBooks(cart)
         let calc = 0
         await cart.forEach(entry => {
@@ -65,12 +84,12 @@ export const CartScreen: React.FC = () => {
                         <Text weight='light'>{books.length} items</Text>
                     </View>
                     
-                    <Text style={styles.subtitle} weight='regular'>R$ {price}</Text>
+                    <Text style={styles.subtitle} weight='regular'>R$ {price.replace('.', ',')}</Text>
                 </View>
                 {
                     books.length > 0 ? (
                         <View>
-                            <SpecialButton text='Fechar pedido' />
+                            <SpecialButton onPress={placeOrder} text='Fechar pedido' />
                             <SpecialButton color='#FFF' icon='apple1' text='Apple Pay' />
                         </View>
                     ) : <></>
@@ -86,9 +105,11 @@ export const CartScreen: React.FC = () => {
                                     <Swipeout style={{backgroundColor: '#f7f8fa'}} autoClose={true} right={[{
                                         onPress: async () => {
                                             await CartService.removeItem(entry)
-                                            await loadCart()
+                                            await loadCart(false)
                                             setWidthAnim(new Animated.Value(-500))
                                             handleAnimation()
+                                            const response = await UserService.removeCart(entry)
+                                            console.log(response.data)
                                         },
                                         text: 'Delete', type: 'delete',
                                     }]} rowId={1}>

@@ -132,7 +132,7 @@ export default function ProfileScreen() {
                                 ) : (
                                     <>
                                         <Text weight='light' style={styles.infoName}>Saldo</Text>
-                                        <Text weight='medium' style={styles.infoValue}>{user.credit}</Text>
+                                        <Text weight='medium' style={styles.infoValue}>R$ {user.credit?.toFixed(2).replace('.', ',')}</Text>
                                     </>
                                 )
                             }

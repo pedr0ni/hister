@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios'
 import Messager from '../components/Messager'
+import { Navigate } from '../../App'
 
 const instance = axios.create({
     baseURL: __DEV__ ? 'http://192.168.0.105:3000' : 'https://hister-api.herokuapp.com',
@@ -10,6 +11,7 @@ const handleError = (error: AxiosError) => {
     if (error.response) {
         if (error.response.status == 401) {
             // Quebrar app
+            Navigate('LogoutScreen', {})
             return
         }
         Messager.show('❌', error.response.data.message, 5000, 'danger')
@@ -36,16 +38,19 @@ export default {
         })
     },
 
-    deleteWithDelay: (path: string) : Promise<AxiosResponse> => {
+    deleteWithDelay: (path: string, body: object) : Promise<AxiosResponse> => {
+        console.log(body)
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                instance.delete(path)
-                    .then(response => resolve(response))
-                    .catch(error => {
-                        handleError(error)
-                        
-                        resolve(undefined)
-                    })
+                instance.delete(path, {
+                    data: body
+                })
+                .then(response => resolve(response))
+                .catch(error => {
+                    handleError(error)
+                    
+                    resolve(undefined)
+                })
             }, delay)
         })
     },
