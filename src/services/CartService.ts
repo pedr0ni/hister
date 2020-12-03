@@ -1,6 +1,7 @@
 import { AsyncStorage } from 'react-native'
 import { Book } from '../models/Book'
 import Service, { BaseService } from './Service'
+import UserService from './UserService'
 
 const TAG = 'CartStorage'
 

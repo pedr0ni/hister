@@ -32,9 +32,6 @@ export default function TabNavigator() {
 					let icon = 'home'
 
 					switch (route.name.toLowerCase()) {
-						case 'explorar':
-							icon = 'find'
-							break
 						case 'meu perfil':
 							icon = 'user'
 							break
@@ -55,7 +52,6 @@ export default function TabNavigator() {
 					}
 				}}>
 				<Tab.Screen name="Home" component={HomeStackScreen} />
-				<Tab.Screen name="Explorar" component={HomeStackScreen} />
 				<Tab.Screen name="Meu Perfil" component={ProfileScreen} />
 				<Tab.Screen name="Carrinho" component={CartScreen} options={items > 0 ? {tabBarBadge: items} : {}} />
 			</Tab.Navigator>

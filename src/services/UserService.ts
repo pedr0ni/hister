@@ -61,6 +61,10 @@ class UserService extends BaseService {
         return Service.deleteWithDelay('/user/cart', book)
     }
 
+    async clearCart() {
+        return Service.patchWithDelay('/user/cart', {})
+    }
+
 }
 
 export default new UserService()

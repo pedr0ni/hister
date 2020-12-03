@@ -3,7 +3,7 @@ import Messager from '../components/Messager'
 import { Navigate } from '../../App'
 
 const instance = axios.create({
-    baseURL: __DEV__ ? 'http://192.168.0.105:3000' : 'https://hister-api.herokuapp.com',
+    baseURL: __DEV__ ? 'http://192.168.0.111:3000' : 'https://hister-api.herokuapp.com',
     timeout: 10000
 })
 
@@ -59,6 +59,20 @@ export default {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 instance.post(path, body)
+                    .then(response => resolve(response))
+                    .catch(error => {
+                        handleError(error)
+                        
+                        resolve(undefined)
+                    })
+            }, delay)
+        })
+    },
+
+    patchWithDelay: (path: string, body: object) : Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                instance.patch(path, body)
                     .then(response => resolve(response))
                     .catch(error => {
                         handleError(error)

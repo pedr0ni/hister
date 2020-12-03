@@ -15,6 +15,7 @@ export const CartScreen: React.FC = () => {
 
     const navigation = useNavigation()
 
+    const [orderLoading, setOrderLoading] = React.useState(false)
     const [books, setBooks] = React.useState<Array<Book>>([])
     const [price, setPrice] = React.useState<string>('0.00')
     const [widthAnim, setWidthAnim] = React.useState(new Animated.Value(-500)) 
@@ -34,13 +35,16 @@ export const CartScreen: React.FC = () => {
     }, [])
 
     const placeOrder = async () => {
+        setOrderLoading(true)
         const response = await CartService.placeOrder(books)
 
         if (response) {
-            Messager.show('🎁', 'Seu pedido foi realizado com sucesso!', 5000, 'success')
+            await UserService.clearCart()
             await CartService.clearCart()
             await loadCart()
+            Messager.show('🎁', 'Seu pedido foi realizado com sucesso!', 5000, 'success')
         }
+        setOrderLoading(false)
     }
 
     const handleAnimation = () => {
@@ -89,7 +93,7 @@ export const CartScreen: React.FC = () => {
                 {
                     books.length > 0 ? (
                         <View>
-                            <SpecialButton onPress={placeOrder} text='Fechar pedido' />
+                            <SpecialButton isLoading={orderLoading} onPress={placeOrder} text='Fechar pedido' />
                             <SpecialButton color='#FFF' icon='apple1' text='Apple Pay' />
                         </View>
                     ) : <></>

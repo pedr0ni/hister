@@ -45,7 +45,10 @@ export default function ProfileScreen() {
             </View>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.infoHolder}>
-                    <Text style={styles.userName} weight='bold'>Olá, {user.name.substring(0, user.name.indexOf(' '))} 😃</Text>
+                    
+                    {
+                        !loading ? <Text style={styles.userName} weight='bold'>Olá, {user.name.substring(0, user.name.indexOf(' '))} 😃</Text> : <></>
+                    }
 
                     <View style={styles.infoCard}>
                         <View style={styles.infoIcon}>
